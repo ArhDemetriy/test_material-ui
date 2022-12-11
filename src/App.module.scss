@@ -2,8 +2,10 @@
   text-align: center;
   &__columns{
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: space-evenly;
+    gap: 2rem;
   }
 }
 
