@@ -60,18 +60,21 @@ function TransitionComponent(props: TransitionProps) {
 
 const StyledTreeItem = styled((props: TreeItemProps) => (
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
-))(({ theme }) => ({
-  [`& .${treeItemClasses.iconContainer}`]: {
-    '& .close': {
-      opacity: 0.3,
+))(({ theme }) => {
+  console.log('theme', theme)
+  return {
+    [`& .${treeItemClasses.iconContainer}`]: {
+      '& .close': {
+        opacity: 0.3,
+      },
     },
-  },
-  [`& .${treeItemClasses.group}`]: {
-    marginLeft: 15,
-    paddingLeft: 18,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
-  },
-}));
+    [`& .${treeItemClasses.group}`]: {
+      marginLeft: 15,
+      paddingLeft: 18,
+      borderLeft: `1px dashed ${alpha('#f00', 0.9)}`,
+    },
+  }
+});
 
 export const CustomTreeView: FC = () => {
   return (

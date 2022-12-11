@@ -1,7 +1,10 @@
 .App {
   text-align: center;
-  background-color: black;
-  color: wheat;
+  &__columns{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
 }
 
 .App-logo {
