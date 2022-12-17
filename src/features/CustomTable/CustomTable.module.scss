@@ -1,4 +1,31 @@
 .table{
-    &__child{
+    border-collapse: collapse;
+    &__caption{
+    }
+    &__colgroup{
+        &-ui{
+        }
+        &-title{
+        }
+        &-other{
+        }
+    }
+    &__head{
+        color: var(--content__color-blur);
+        font-size: .7778rem;
+        font-style: normal;
+        font-weight: 400;
+        &__item{
+            height: 60px;
+            padding-left: 0.6667rem;
+        }
+    }
+    &__body{
+        color: var(--content__color-focus);
+        &__item{
+            height: 60px;
+            padding-left: 0.6667rem;
+            border-top: solid 1px var(--ui__color);
+        }
     }
 }

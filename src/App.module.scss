@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   &__columns{
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

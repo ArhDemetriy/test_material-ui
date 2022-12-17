@@ -5,14 +5,18 @@ body {
         'Roboto',
         sans-serif;
 
+
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+}
+
+:root{
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 130%;
     letter-spacing: 0.1px;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 
     --ui__background: #27272A;
     --ui__color: #414144;
@@ -31,6 +35,10 @@ code {
 
 input {
     outline: none;
+}
+
+th{
+    font-weight: inherit;
 }
 
 * {
