@@ -1,20 +1,26 @@
 .table{
     border-collapse: collapse;
+    width: 100%;
     &__caption{
+        text-align: left;
     }
     &__colgroup{
         &-ui{
+            min-width: max-content;
+            width: 110px;
         }
         &-title{
         }
         &-other{
+            min-width: max-content;
+            width: 200px;
         }
     }
     &__head{
         color: var(--content__color-blur);
         font-size: .7778rem;
-        font-style: normal;
         font-weight: 400;
+        text-align: left;
         &__item{
             height: 60px;
             padding-left: 0.6667rem;
