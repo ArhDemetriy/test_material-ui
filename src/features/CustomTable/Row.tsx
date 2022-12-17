@@ -5,7 +5,6 @@ import styles from './Row.module.scss';
 
 interface RowProps extends ControlsItemProps {
     readonly data: {
-        // ui = 'Уровень',
         readonly rowName: string
         readonly salary: number
         readonly equipmentCosts: number
@@ -15,13 +14,17 @@ interface RowProps extends ControlsItemProps {
 }
 
 export const Row: FC<IncludeClassName<RowProps>> = p => {
-    return <tr className={`${p.requiredClass} ${styles['row']}`}>
-        <ControlsItem level={p.level} existNextItem={p.existNextItem} requiredClass={`${p.requiredClass}__item ${styles['row__item']}`} />
-        <td className={`${p.requiredClass}__item ${styles['row__item']}`}>{}</td>
-        <td className={`${p.requiredClass}__item ${styles['row__item']}`}>{p.data.rowName}</td>
-        <td className={`${p.requiredClass}__item ${styles['row__item']}`}>{p.data.salary}</td>
-        <td className={`${p.requiredClass}__item ${styles['row__item']}`}>{p.data.equipmentCosts}</td>
-        <td className={`${p.requiredClass}__item ${styles['row__item']}`}>{p.data.overheads}</td>
-        <td className={`${p.requiredClass}__item ${styles['row__item']}`}>{p.data.estimatedProfit}</td>
+    let tdClassName = styles['row__item'] ?? ''
+    if (tdClassName.length)
+        tdClassName = ' ' + tdClassName
+    tdClassName = p.requiredClass + tdClassName
+
+    return <tr className={styles['row']}>
+        <ControlsItem level={p.level} existNextItem={p.existNextItem} requiredClass={tdClassName} />
+        <td className={tdClassName}>{p.data.rowName}</td>
+        <td className={tdClassName}>{p.data.salary}</td>
+        <td className={tdClassName}>{p.data.equipmentCosts}</td>
+        <td className={tdClassName}>{p.data.overheads}</td>
+        <td className={tdClassName}>{p.data.estimatedProfit}</td>
     </tr>
 }

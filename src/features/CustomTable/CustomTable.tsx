@@ -28,7 +28,7 @@ export const CustomTable: FC<CustomTableProps> = p => {
         </thead>
         <tbody className={styles['table__body']}>
             <Row
-                requiredClass={styles['table__body__row'] || ''}
+                requiredClass={styles['table__body__item'] || ''}
                 existNextItem={true}
                 level={0}
                 data={{
@@ -39,7 +39,7 @@ export const CustomTable: FC<CustomTableProps> = p => {
                     estimatedProfit: 3,
                 }} />
             <Row
-                requiredClass={styles['table__body__row'] || ''}
+                requiredClass={styles['table__body__item'] || ''}
                 existNextItem={false}
                 level={1}
                 data={{
