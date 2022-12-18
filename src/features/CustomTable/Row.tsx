@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { IncludeClassName } from '../../types/reactTypes';
-import { Controls, ControlsProps } from './ControlsItem';
+import { Controls, ControlsProps } from './Controls';
 import styles from './Row.module.scss';
 
 interface RowProps extends ControlsProps {
