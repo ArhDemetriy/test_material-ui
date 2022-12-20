@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { IncludeClassName } from '../../types/reactTypes';
-import styles from './ControlsItem.module.scss';
+import styles from './Controls.module.scss';
 import folder1 from "./ico/folder1.svg";
 import folder2 from "./ico/folder2.svg";
 import doc from "./ico/doc.svg";
