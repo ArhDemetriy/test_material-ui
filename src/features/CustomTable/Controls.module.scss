@@ -3,6 +3,10 @@
     height: 100%;
     display: flex;
 
+    // size __image element. default value, before useEffect(... getComputedStyle ...)
+    --ico_height: 0px;
+    --ico_width: 0px;
+
     // lines
     &__wrapper{
         display: flex;
@@ -19,7 +23,7 @@
         position: absolute;
         border: 1px solid #C6C6C6;
         &-vertical{
-            height: calc(var(--row_height, 0) / 2 + 1px);
+            height: calc(calc(var(--row_height, 0px) - var(--ico_height, 0px)) / 2 + 2px);
             top: -1px;
             right: 1px;
         }
