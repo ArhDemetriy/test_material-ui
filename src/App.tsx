@@ -1,7 +1,7 @@
 import styles from './App.module.scss';
 import { CustomTable } from './features/CustomTable/CustomTable';
 // import { Counter } from './features/counter/Counter';
-import { CustomTreeView } from './features/treeVIew/CustomTreeView';
+// import { CustomTreeView } from './features/treeVIew/CustomTreeView';
 // import { CustomSelect } from './features/SelectorTest/CustomSelect';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <div className={styles['App__columns']}>
         <CustomTable />
-        <CustomTreeView />
+        {/* <CustomTreeView /> */}
         {/* <Counter /> */}
         {/* <CustomSelect /> */}
       </div>

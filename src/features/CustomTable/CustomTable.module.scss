@@ -1,6 +1,7 @@
 .table{
     border-collapse: collapse;
     width: 100%;
+    --row_height: 60px;
     &__caption{
         text-align: left;
     }
@@ -22,14 +23,14 @@
         font-weight: 400;
         text-align: left;
         &__item{
-            height: 60px;
+            height: var(--row_height);
             padding-left: 0.6667rem;
         }
     }
     &__body{
         color: var(--content__color-focus);
         &__item{
-            height: 60px;
+            height: var(--row_height);
             padding-left: 0.6667rem;
             border-top: solid 1px var(--ui__color);
         }
