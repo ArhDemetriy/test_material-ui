@@ -5,25 +5,29 @@ import folder2 from "./ico/folder2.svg";
 import doc from "./ico/doc.svg";
 
 export interface ControlsProps{
-    readonly countInputLines?: 0 | 1 | 2
-    readonly lastInputLineIsLong?: boolean
+    /**
+     * @example
+     * ['invisible', 'short']
+     */
+    readonly linesMask?: [...('invisible' | 'long')[], 'short' | 'long']
     readonly existOutputLine?: boolean
 }
 
-const InputLines: FC<Pick<ControlsProps, 'countInputLines' | 'lastInputLineIsLong'>> = p => {
-    if (!p.countInputLines)
+const InputLines: FC<Pick<ControlsProps, 'linesMask'>> = p => {
+    if (!p.linesMask?.length)
         return null
 
     const className = `${styles['controls__line']} ${styles['controls__line-input']}`
 
-    const classes: string[] = []
-    for (let i = 0; i < p.countInputLines - 1; i++)
-        classes.push(`${className} ${styles['controls__line-input-long']}`)
+    const classes: string[] = p.linesMask.map(style => {
+        if (style === 'invisible')
+            return `${className} ${styles['controls__line-input-invisible']}`
+        if (style === 'short')
+            return `${className} ${styles['controls__line-input-short']}`
+        return `${className} ${styles['controls__line-input-long']}`
+    })
 
-    if (p.lastInputLineIsLong)
-        classes.push(`${className} ${styles['controls__line-input-long']} ${styles['controls__line-input-last']}`)
-    else
-        classes.push(`${className} ${styles['controls__line-input-short']} ${styles['controls__line-input-last']}`)
+    classes[0] += ' ' + styles['controls__line-input-first']
 
     return <>{classes
         .map((className, i) => <div className={className} key={i} />)}
@@ -33,11 +37,11 @@ const InputLines: FC<Pick<ControlsProps, 'countInputLines' | 'lastInputLineIsLon
 const ICO_HEIGHT = "--ico_height" as const
 const ICO_WIGHT = "--ico_width" as const
 
-function getIcoSrc(props: Pick<ControlsProps, 'countInputLines'>) {
+function getIcoSrc(props: Pick<ControlsProps, 'linesMask'>) {
     let result = folder1
-    if (props.countInputLines === 1)
+    if (props.linesMask?.length === 1)
         result = folder2
-    else if (props.countInputLines === 2)
+    else if (props.linesMask?.length === 2)
         result = doc
     return result
 }
@@ -64,11 +68,11 @@ export const Controls: FC<ControlsProps> = p => {
         setSizeConstants({ ...sizeConstants, ...newSize })
     }, [])
 
-    const isChildren = !!p.countInputLines
+    const isChildren = !!p.linesMask
     const icoSrc = getIcoSrc(p)
 
     return <div style={sizeConstants as CSSProperties} className={styles['controls']}>
-        <InputLines countInputLines={p.countInputLines} lastInputLineIsLong={p.lastInputLineIsLong} />
+        <InputLines linesMask={p.linesMask} />
 
         {isChildren && <div className={styles['controls__wrapper']}>
             <div className={`${styles['controls__line']} ${styles['controls__line-dash']}`} /></div>}

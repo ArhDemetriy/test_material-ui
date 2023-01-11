@@ -21,7 +21,7 @@ export const Row: FC<IncludeClassName<RowProps>> = p => {
 
     return <tr className={styles['row']}>
         <td className={tdClassName}>
-            <Controls countInputLines={p.countInputLines} lastInputLineIsLong={p.lastInputLineIsLong} existOutputLine={p.existOutputLine} /></td>
+            <Controls linesMask={p.linesMask} existOutputLine={p.existOutputLine} /></td>
         <td className={tdClassName}>{p.data.rowName}</td>
         <td className={tdClassName}>{p.data.salary}</td>
         <td className={tdClassName}>{p.data.equipmentCosts}</td>

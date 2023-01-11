@@ -29,7 +29,6 @@ export const CustomTable: FC<CustomTableProps> = p => {
         <tbody className={styles['table__body']}>
             <Row
                 requiredClass={styles['table__body__item'] || ''}
-                countInputLines={0}
                 existOutputLine={true}
                 data={{
                     rowName: 'row0',
@@ -40,8 +39,7 @@ export const CustomTable: FC<CustomTableProps> = p => {
                 }} />
             <Row
                 requiredClass={styles['table__body__item'] || ''}
-                countInputLines={1}
-                lastInputLineIsLong={true}
+                linesMask={['short']}
                 existOutputLine={true}
                 data={{
                     rowName: 'row1',
@@ -52,8 +50,7 @@ export const CustomTable: FC<CustomTableProps> = p => {
                 }} />
             <Row
                 requiredClass={styles['table__body__item'] || ''}
-                countInputLines={2}
-                lastInputLineIsLong={true}
+                linesMask={['invisible', 'long']}
                 existOutputLine={false}
                 data={{
                     rowName: 'row1',
@@ -64,8 +61,7 @@ export const CustomTable: FC<CustomTableProps> = p => {
                 }} />
             <Row
                 requiredClass={styles['table__body__item'] || ''}
-                countInputLines={2}
-                lastInputLineIsLong={false}
+                linesMask={['invisible', 'short']}
                 existOutputLine={false}
                 data={{
                     rowName: 'row1',
