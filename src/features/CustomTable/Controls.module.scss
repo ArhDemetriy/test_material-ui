@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
 
-    // size __image element. default value, before useEffect(... getComputedStyle ...)
+    // size __image element. default value, before onLoad
     --ico_height: 0px;
     --ico_width: 0px;
     --lines_gap: 20px;
@@ -19,36 +19,27 @@
     &__line{
         border: 1px solid #C6C6C6;
         &-input{
-            margin-right: var(--lines_gap);
-            &-last{
-                margin-right: 0;
+            margin-left: var(--lines_gap);
+            &-first{
+                margin-left: 10px;
             }
             &-long{
                 height: calc(var(--row_height, 0px) + 2px);
             }
             &-short{
-                height: calc(calc(var(--row_height, 0px) - var(--ico_height, 0px)) / 2 + 2px);
+                height: calc(var(--row_height, 0px) / 2);
+                align-self: flex-start;
             }
         }
         &-dash{
-            width: 20px;
+            width: calc(var(--lines_gap) - var(--ico_width) / 2);
         }
         &-output{
-            height: calc(calc(var(--row_height, 0px) - var(--ico_height, 0px)) / 2 + 2px);
+            position: absolute;
+            height: calc(calc(var(--row_height, 0px) - var(--ico_height)) / 2 + 2px);
+            top: calc(var(--ico_height) / 2 - 1px);
+            left: calc(var(--ico_width) / 2);
         }
-
-
-
-
-        // &-vertical{
-        //     height: calc(calc(var(--row_height, 0px) - var(--ico_height, 0px)) / 2 + 2px);
-        //     top: -1px;
-        //     right: 1px;
-        // }
-        // &-horizontal{
-        //     width: 20px;
-        //     right: -1px;
-        // }
     }
 
     // image

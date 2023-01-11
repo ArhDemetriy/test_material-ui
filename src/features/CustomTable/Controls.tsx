@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
+import { CSSProperties, FC, useCallback, useState } from 'react';
 import styles from './Controls.module.scss';
 import folder1 from "./ico/folder1.svg";
 import folder2 from "./ico/folder2.svg";
@@ -43,20 +43,14 @@ function getIcoSrc(props: Pick<ControlsProps, 'countInputLines'>) {
 }
 
 export const Controls: FC<ControlsProps> = p => {
-    const icoSrc = getIcoSrc(p)
-
     // вынесение размеров иконки в корень элемента
     // необходимо для вычесления отступов линий
 
     // сделано так сложно, потому-что у иконок прозрачный центр и нельзя начинать линии от центра картинок.
-    const icoRef = useRef<HTMLImageElement>(null)
     const [sizeConstants, setSizeConstants] = useState({ [ICO_HEIGHT]: '0px', [ICO_WIGHT]: '0px' })
 
-    useEffect(() => {
-        if (icoRef.current == null)
-            return
-
-        const { height: rawHeight, width: rawWidth } = window.getComputedStyle(icoRef.current)
+    const onLoad = useCallback<React.ReactEventHandler<HTMLImageElement>>(e => {
+        const { height: rawHeight, width: rawWidth } = window.getComputedStyle(e.currentTarget)
 
         let newSize: Partial<typeof sizeConstants> = {}
         if (rawHeight !== sizeConstants[ICO_HEIGHT])
@@ -68,24 +62,24 @@ export const Controls: FC<ControlsProps> = p => {
             return
 
         setSizeConstants({ ...sizeConstants, ...newSize })
-    }, [icoRef.current, sizeConstants])
+    }, [])
 
     const isChildren = !!p.countInputLines
+    const icoSrc = getIcoSrc(p)
 
     return <div style={sizeConstants as CSSProperties} className={styles['controls']}>
         <InputLines countInputLines={p.countInputLines} lastInputLineIsLong={p.lastInputLineIsLong} />
 
-        {isChildren && <div className={styles['controls__wrapper']} children={
-            <div className={`${styles['controls__line']} ${styles['controls__line-dash']}`} />} />}
+        {isChildren && <div className={styles['controls__wrapper']}>
+            <div className={`${styles['controls__line']} ${styles['controls__line-dash']}`} /></div>}
 
-        {p.existOutputLine && <div className={styles['controls__wrapper']} children={
-            <div className={`${styles['controls__line']} ${styles['controls__line-output']}`} />} />}
+        {p.existOutputLine && <div className={styles['controls__wrapper']}>
+            <div className={`${styles['controls__line']} ${styles['controls__line-output']}`} /></div>}
 
         <div className={styles['controls__wrapper']}>
             <div className={styles['controls__background_images']} />
             <div className={`${styles['controls__wrapper']} ${styles['controls__wrapper-bottom']}`}>
-                <img ref={icoRef} src={icoSrc} className={styles['controls__image']} alt="" />
-            </div>
+                <img src={icoSrc} onLoad={onLoad} className={styles['controls__image']} alt="" /></div>
         </div>
     </div>
 }
