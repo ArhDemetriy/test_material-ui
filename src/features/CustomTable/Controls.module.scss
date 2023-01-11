@@ -30,6 +30,9 @@
                 height: calc(var(--row_height, 0px) / 2);
                 align-self: flex-start;
             }
+            &-invisible{
+                visibility: hidden;
+            }
         }
         &-dash{
             width: calc(var(--lines_gap) - var(--ico_width) / 2);
