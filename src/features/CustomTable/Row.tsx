@@ -20,7 +20,8 @@ export const Row: FC<IncludeClassName<RowProps>> = p => {
     tdClassName = p.requiredClass + tdClassName
 
     return <tr className={styles['row']}>
-        <Controls level={p.level} existNextItem={p.existNextItem} requiredClass={tdClassName} />
+        <td className={tdClassName}>
+            <Controls linesMask={p.linesMask} existOutputLine={p.existOutputLine} /></td>
         <td className={tdClassName}>{p.data.rowName}</td>
         <td className={tdClassName}>{p.data.salary}</td>
         <td className={tdClassName}>{p.data.equipmentCosts}</td>

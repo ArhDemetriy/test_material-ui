@@ -1,64 +1,89 @@
-import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
-import { IncludeClassName } from '../../types/reactTypes';
+import { CSSProperties, FC, useCallback, useState } from 'react';
 import styles from './Controls.module.scss';
 import folder1 from "./ico/folder1.svg";
 import folder2 from "./ico/folder2.svg";
 import doc from "./ico/doc.svg";
 
 export interface ControlsProps{
-    readonly level?: 0 | 1 | 2
-    readonly existNextItem?: boolean
+    /**
+     * @example
+     * ['invisible', 'short']
+     */
+    readonly linesMask?: [...('invisible' | 'long')[], 'short' | 'long']
+    readonly existOutputLine?: boolean
+}
+
+const InputLines: FC<Pick<ControlsProps, 'linesMask'>> = p => {
+    if (!p.linesMask?.length)
+        return null
+
+    const className = `${styles['controls__line']} ${styles['controls__line-input']}`
+
+    const classes: string[] = p.linesMask.map(style => {
+        if (style === 'invisible')
+            return `${className} ${styles['controls__line-input-invisible']}`
+        if (style === 'short')
+            return `${className} ${styles['controls__line-input-short']}`
+        return `${className} ${styles['controls__line-input-long']}`
+    })
+
+    classes[0] += ' ' + styles['controls__line-input-first']
+
+    return <>{classes
+        .map((className, i) => <div className={className} key={i} />)}
+    </>
 }
 
 const ICO_HEIGHT = "--ico_height" as const
 const ICO_WIGHT = "--ico_width" as const
 
-export const Controls: FC<IncludeClassName<ControlsProps>> = p => {
-    let icoSrc = folder1
-    if (p.level === 1)
-        icoSrc = folder2
-    else if (p.level === 2)
-        icoSrc = doc
+function getIcoSrc(props: Pick<ControlsProps, 'linesMask'>) {
+    let result = folder1
+    if (props.linesMask?.length === 1)
+        result = folder2
+    else if (props.linesMask?.length === 2)
+        result = doc
+    return result
+}
 
+export const Controls: FC<ControlsProps> = p => {
     // вынесение размеров иконки в корень элемента
     // необходимо для вычесления отступов линий
 
     // сделано так сложно, потому-что у иконок прозрачный центр и нельзя начинать линии от центра картинок.
-    const icoRef = useRef<HTMLImageElement>(null)
     const [sizeConstants, setSizeConstants] = useState({ [ICO_HEIGHT]: '0px', [ICO_WIGHT]: '0px' })
 
-    useEffect(() => {
-        if (icoRef.current == null)
-            return
-
-        const { height: rawHeight, width: rawWidth } = window.getComputedStyle(icoRef.current)
+    const onLoad = useCallback<React.ReactEventHandler<HTMLImageElement>>(e => {
+        const { height: rawHeight, width: rawWidth } = window.getComputedStyle(e.currentTarget)
 
         let newSize: Partial<typeof sizeConstants> = {}
-        if (rawHeight != sizeConstants[ICO_HEIGHT])
+        if (rawHeight !== sizeConstants[ICO_HEIGHT])
             newSize[ICO_HEIGHT] = rawHeight
-        if (rawWidth != sizeConstants[ICO_WIGHT])
+        if (rawWidth !== sizeConstants[ICO_WIGHT])
             newSize[ICO_WIGHT] = rawWidth
 
         if (!Object.keys(newSize).length)
             return
 
         setSizeConstants({ ...sizeConstants, ...newSize })
+    }, [])
 
-    }, [icoSrc, icoRef])
+    const isChildren = !!p.linesMask
+    const icoSrc = getIcoSrc(p)
 
-    return <td className={p.requiredClass}>
-        <div style={sizeConstants as CSSProperties} className={styles['controls']}>
-            <div className={`${styles['controls__wrapper']} ${styles['controls__wrapper-left']}`}>
-                <div className={styles['controls__wrapper']}>
-                    <div className={`${styles['controls__line']} ${styles['controls__line-horizontal']}`} />
-                </div>
-                <div className={`${styles['controls__wrapper']} ${styles['controls__wrapper-bottom']}`}>
-                    <div className={styles['controls__wrapper']}>
-                        <div className={`${styles['controls__line']} ${styles['controls__line-vertical']}`} />
-                    </div>
-                    <img ref={icoRef} src={icoSrc} className={styles['controls__image']} alt="" />
-                </div>
-            </div>
+    return <div style={sizeConstants as CSSProperties} className={styles['controls']}>
+        <InputLines linesMask={p.linesMask} />
+
+        {isChildren && <div className={styles['controls__wrapper']}>
+            <div className={`${styles['controls__line']} ${styles['controls__line-dash']}`} /></div>}
+
+        {p.existOutputLine && <div className={styles['controls__wrapper']}>
+            <div className={`${styles['controls__line']} ${styles['controls__line-output']}`} /></div>}
+
+        <div className={styles['controls__wrapper']}>
+            <div className={styles['controls__background_images']} />
+            <div className={`${styles['controls__wrapper']} ${styles['controls__wrapper-bottom']}`}>
+                <img src={icoSrc} onLoad={onLoad} className={styles['controls__image']} alt="" /></div>
         </div>
-    </td>
+    </div>
 }
