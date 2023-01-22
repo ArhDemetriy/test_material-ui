@@ -3,17 +3,17 @@ import styles from './Controls.module.scss';
 import folder1 from "./ico/folder1.svg";
 import folder2 from "./ico/folder2.svg";
 import doc from "./ico/doc.svg";
+import trash from "./ico/trash.svg";
 
-export interface ControlsProps{
+interface InputLinesProps {
     /**
      * @example
      * ['invisible', 'short']
      */
     readonly linesMask?: [...('invisible' | 'long')[], 'short' | 'long']
-    readonly existOutputLine?: boolean
 }
 
-const InputLines: FC<Pick<ControlsProps, 'linesMask'>> = p => {
+const InputLines: FC<InputLinesProps> = p => {
     if (!p.linesMask?.length)
         return null
 
@@ -32,6 +32,10 @@ const InputLines: FC<Pick<ControlsProps, 'linesMask'>> = p => {
     return <>{classes
         .map((className, i) => <div className={className} key={i} />)}
     </>
+}
+
+export interface ControlsProps extends InputLinesProps {
+    readonly existOutputLine?: boolean
 }
 
 const ICO_HEIGHT = "--ico_height" as const
@@ -67,8 +71,8 @@ export const Controls: FC<ControlsProps> = p => {
         setSizeConstants({ ...sizeConstants, ...newSize })
     }, []) // нужно только первое срабатывание
 
-    const [check, setCheck] = useState(false)
-    const onCheck = useCallback<React.ChangeEventHandler<HTMLInputElement>>(e => setCheck(e.currentTarget.checked), [])
+    const [showButton, setShowButton] = useState(false)
+    const switchShowButton = useCallback<React.ChangeEventHandler<HTMLInputElement>>(e => setShowButton(e.currentTarget.checked), [])
 
     const isChildren = !!p.linesMask
     const icoSrc = getIcoSrc(p)
@@ -83,16 +87,13 @@ export const Controls: FC<ControlsProps> = p => {
             <div className={`${styles['controls__line']} ${styles['controls__line-output']}`} /></div>}
 
         <label className={styles['controls__images']}>
-            <input className={styles['controls__images__button_switch']} type="checkbox" checked={check} onChange={onCheck} name="buttons" />
+            <input className={styles['controls__images__button_switch']} type="checkbox" checked={showButton} onChange={switchShowButton} name="buttons" />
 
-            <div className={styles['controls__images__background']} />
+            {showButton && <div className={styles['controls__images__background']} />}
             <img src={icoSrc} onLoad={onLoad} className={styles['controls__images__main']} alt="" />
 
-            <button className={styles['controls__images__button']} disabled={!check} type={"button"}>
-                <img src={icoSrc} alt="" />
-            </button>
-            <button className={styles['controls__images__button']} disabled={!check} type={"button"}>
-                <img src={icoSrc} alt="" />
+            <button className={styles['controls__images__button']} disabled={!showButton} type={"button"}>
+                <img src={trash} alt="" />
             </button>
         </label>
     </div>
