@@ -39,7 +39,7 @@ export const CustomTable: FC<CustomTableProps> = p => {
                 }} />
             <Row
                 requiredClass={styles['table__body__item'] || ''}
-                linesMask={['short']}
+                linesMask={['long']}
                 existOutputLine={true}
                 data={{
                     rowName: 'row1',
@@ -50,7 +50,7 @@ export const CustomTable: FC<CustomTableProps> = p => {
                 }} />
             <Row
                 requiredClass={styles['table__body__item'] || ''}
-                linesMask={['invisible', 'long']}
+                linesMask={['long', 'long']}
                 existOutputLine={false}
                 data={{
                     rowName: 'row1',
@@ -61,7 +61,18 @@ export const CustomTable: FC<CustomTableProps> = p => {
                 }} />
             <Row
                 requiredClass={styles['table__body__item'] || ''}
-                linesMask={['invisible', 'short']}
+                linesMask={['long', 'short']}
+                existOutputLine={false}
+                data={{
+                    rowName: 'row1',
+                    salary: 0,
+                    equipmentCosts: 1,
+                    overheads: 2,
+                    estimatedProfit: 3,
+                }} />
+            <Row
+                requiredClass={styles['table__body__item'] || ''}
+                linesMask={['short']}
                 existOutputLine={false}
                 data={{
                     rowName: 'row1',
