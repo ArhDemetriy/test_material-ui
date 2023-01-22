@@ -49,7 +49,6 @@ function getIcoSrc(props: Pick<ControlsProps, 'linesMask'>) {
 export const Controls: FC<ControlsProps> = p => {
     // вынесение размеров иконки в корень элемента
     // необходимо для вычесления отступов линий
-
     // сделано так сложно, потому-что у иконок прозрачный центр и нельзя начинать линии от центра картинок.
     const [sizeConstants, setSizeConstants] = useState({ [ICO_HEIGHT]: '0px', [ICO_WIGHT]: '0px' })
 
@@ -66,7 +65,10 @@ export const Controls: FC<ControlsProps> = p => {
             return
 
         setSizeConstants({ ...sizeConstants, ...newSize })
-    }, [])
+    }, []) // нужно только первое срабатывание
+
+    const [check, setCheck] = useState(false)
+    const onCheck = useCallback<React.ChangeEventHandler<HTMLInputElement>>(e => setCheck(e.currentTarget.checked), [])
 
     const isChildren = !!p.linesMask
     const icoSrc = getIcoSrc(p)
@@ -80,10 +82,18 @@ export const Controls: FC<ControlsProps> = p => {
         {p.existOutputLine && <div className={styles['controls__wrapper']}>
             <div className={`${styles['controls__line']} ${styles['controls__line-output']}`} /></div>}
 
-        <div className={styles['controls__wrapper']}>
-            <div className={styles['controls__background_images']} />
-            <div className={`${styles['controls__wrapper']} ${styles['controls__wrapper-bottom']}`}>
-                <img src={icoSrc} onLoad={onLoad} className={styles['controls__image']} alt="" /></div>
-        </div>
+        <label className={styles['controls__images']}>
+            <input className={styles['controls__images__button_switch']} type="checkbox" checked={check} onChange={onCheck} name="buttons" />
+
+            <div className={styles['controls__images__background']} />
+            <img src={icoSrc} onLoad={onLoad} className={styles['controls__images__main']} alt="" />
+
+            <button className={styles['controls__images__button']} disabled={!check} type={"button"}>
+                <img src={icoSrc} alt="" />
+            </button>
+            <button className={styles['controls__images__button']} disabled={!check} type={"button"}>
+                <img src={icoSrc} alt="" />
+            </button>
+        </label>
     </div>
 }

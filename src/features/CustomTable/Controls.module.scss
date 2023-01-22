@@ -46,10 +46,45 @@
     }
 
     // image
-    &__background_images{
-    }
-    &__image{
+    &__images{
+        display: flex;
+        align-items: center;
         position: relative;
-        opacity: .3;
+        gap: 5px;
+
+        &__background{
+            position: absolute;
+            background-color: #414144;
+
+            $padding: -6px;
+            left: $padding;
+            right: $padding;
+            top: $padding;
+            bottom: $padding;
+            border-radius: -$padding;
+
+            z-index: -1;
+        }
+        &__button_switch{
+            display: none;
+        }
+        &__main{
+        }
+        &__button{
+            display: flex;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: 0;
+            padding: 0;
+            background-color: transparent;
+            font-style: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            text-decoration: inherit;
+
+            &:disabled{
+                display: none;
+            }
+        }
     }
 }
