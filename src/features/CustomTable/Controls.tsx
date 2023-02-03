@@ -72,9 +72,9 @@ export const Controls: FC<ControlsProps> = p => {
     }, []) // нужно только первое срабатывание
 
     const [showButton, setShowButton] = useState(false)
-    const switchShowButton = useCallback<React.ChangeEventHandler<HTMLInputElement>>(e => setShowButton(e.currentTarget.checked), [])
+    const switchShowButton = useCallback<React.ChangeEventHandler<HTMLInputElement>>(e => setShowButton(e.currentTarget.checked), [setShowButton])
 
-    const isChildren = !!p.linesMask
+    const isChildren = !!p.linesMask?.length
     const icoSrc = getIcoSrc(p)
 
     return <div style={sizeConstants as CSSProperties} className={styles['controls']}>
